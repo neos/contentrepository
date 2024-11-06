@@ -1,4 +1,5 @@
 <?php
+
 namespace Neos\ContentRepository\Domain\Model;
 
 /*
@@ -1349,7 +1350,7 @@ class Node implements NodeInterface, CacheAwareInterface, TraversableNodeInterfa
             $this->materializeNodeData();
         }
 
-        if ((boolean)$removed === true) {
+        if ((bool)$removed === true) {
             /** @var $childNode Node */
             foreach ($this->getChildNodes() as $childNode) {
                 $childNode->setRemoved(true);
@@ -1389,10 +1390,13 @@ class Node implements NodeInterface, CacheAwareInterface, TraversableNodeInterfa
         if ($this->isHidden() === $hidden) {
             return;
         }
+        $oldValue = $this->isHidden();
+        $this->emitBeforeNodePropertyChange($this, '_hidden', $oldValue, $hidden);
         $this->materializeNodeDataAsNeeded();
         $this->nodeData->setHidden($hidden);
 
         $this->context->getFirstLevelNodeCache()->flush();
+        $this->emitNodePropertyChanged($this, '_hidden', $oldValue, $hidden);
         $this->emitNodeUpdated($this);
     }
 
@@ -1421,10 +1425,13 @@ class Node implements NodeInterface, CacheAwareInterface, TraversableNodeInterfa
         if ($this->getHiddenBeforeDateTime() instanceof \DateTime && $dateTime instanceof \DateTime && $this->getHiddenBeforeDateTime()->format(\DateTime::W3C) === $dateTime->format(\DateTime::W3C)) {
             return;
         }
+        $oldValue = $this->getHiddenBeforeDateTime();
+        $this->emitBeforeNodePropertyChange($this, '_hiddenBeforeDateTime', $oldValue, $dateTime);
         $this->materializeNodeDataAsNeeded();
         $this->nodeData->setHiddenBeforeDateTime($dateTime);
 
         $this->context->getFirstLevelNodeCache()->flush();
+        $this->emitNodePropertyChanged($this, '_hiddenBeforeDateTime', $oldValue, $dateTime);
         $this->emitNodeUpdated($this);
     }
 
@@ -1452,10 +1459,13 @@ class Node implements NodeInterface, CacheAwareInterface, TraversableNodeInterfa
         if ($this->getHiddenAfterDateTime() instanceof \DateTimeInterface && $dateTime instanceof \DateTimeInterface && $this->getHiddenAfterDateTime()->format(\DateTime::W3C) === $dateTime->format(\DateTime::W3C)) {
             return;
         }
+        $oldValue = $this->getHiddenAfterDateTime();
+        $this->emitBeforeNodePropertyChange($this, '_hiddenAfterDateTime', $oldValue, $dateTime);
         $this->materializeNodeDataAsNeeded();
         $this->nodeData->setHiddenAfterDateTime($dateTime);
 
         $this->context->getFirstLevelNodeCache()->flush();
+        $this->emitNodePropertyChanged($this, '_hiddenAfterDateTime', $oldValue, $dateTime);
         $this->emitNodeUpdated($this);
     }
 
@@ -1483,10 +1493,13 @@ class Node implements NodeInterface, CacheAwareInterface, TraversableNodeInterfa
         if ($this->isHiddenInIndex() === $hidden) {
             return;
         }
+        $oldValue = $this->isHiddenInIndex();
+        $this->emitBeforeNodePropertyChange($this, '_hiddenInIndex', $oldValue, $hidden);
         $this->materializeNodeDataAsNeeded();
         $this->nodeData->setHiddenInIndex($hidden);
 
         $this->context->getFirstLevelNodeCache()->flush();
+        $this->emitNodePropertyChanged($this, '_hiddenInIndex', $oldValue, $hidden);
         $this->emitNodeUpdated($this);
     }
 
