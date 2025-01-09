@@ -112,7 +112,7 @@ class PublishingService implements PublishingServiceInterface
      * @return void
      * @api
      */
-    public function publishNode(NodeInterface $node, Workspace $targetWorkspace = null)
+    public function publishNode(NodeInterface $node, ?Workspace $targetWorkspace = null)
     {
         if ($targetWorkspace === null) {
             $targetWorkspace = $node->getWorkspace()->getBaseWorkspace();
@@ -132,7 +132,7 @@ class PublishingService implements PublishingServiceInterface
      * @return void
      * @api
      */
-    public function publishNodes(array $nodes, Workspace $targetWorkspace = null)
+    public function publishNodes(array $nodes, ?Workspace $targetWorkspace = null)
     {
         $nodes = $this->sortNodesForPublishing($nodes);
         foreach ($nodes as $node) {
@@ -265,7 +265,7 @@ class PublishingService implements PublishingServiceInterface
      * @Flow\Signal
      * @api
      */
-    public function emitNodePublished(NodeInterface $node, Workspace $targetWorkspace = null)
+    public function emitNodePublished(NodeInterface $node, ?Workspace $targetWorkspace = null)
     {
     }
 

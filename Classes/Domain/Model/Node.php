@@ -345,7 +345,7 @@ class Node implements NodeInterface, CacheAwareInterface, TraversableNodeInterfa
      * @param NodeInterface $nodeToMove
      * @return array NodeVariant and old and new path
      */
-    protected function moveVariantOrChild(string $aggregateOriginalPath, string $aggregateDestinationPath, NodeInterface $nodeToMove = null): ?array
+    protected function moveVariantOrChild(string $aggregateOriginalPath, string $aggregateDestinationPath, ?NodeInterface $nodeToMove = null): ?array
     {
         if ($nodeToMove === null) {
             return null;
@@ -605,7 +605,7 @@ class Node implements NodeInterface, CacheAwareInterface, TraversableNodeInterfa
      * @throws NodeTypeNotFoundException
      * @api
      */
-    public function moveBefore(NodeInterface $referenceNode, string $newName = null): void
+    public function moveBefore(NodeInterface $referenceNode, ?string $newName = null): void
     {
         if ($referenceNode === $this) {
             return;
@@ -652,7 +652,7 @@ class Node implements NodeInterface, CacheAwareInterface, TraversableNodeInterfa
      * @throws NodeTypeNotFoundException
      * @api
      */
-    public function moveAfter(NodeInterface $referenceNode, string $newName = null): void
+    public function moveAfter(NodeInterface $referenceNode, ?string $newName = null): void
     {
         if ($referenceNode === $this) {
             return;
@@ -699,7 +699,7 @@ class Node implements NodeInterface, CacheAwareInterface, TraversableNodeInterfa
      * @throws NodeTypeNotFoundException
      * @api
      */
-    public function moveInto(NodeInterface $referenceNode, string $newName = null): void
+    public function moveInto(NodeInterface $referenceNode, ?string $newName = null): void
     {
         if ($referenceNode === $this || $referenceNode === $this->getParent()) {
             return;
@@ -1136,7 +1136,7 @@ class Node implements NodeInterface, CacheAwareInterface, TraversableNodeInterfa
      * @throws NodeTypeNotFoundException
      * @api
      */
-    public function createNode($name, NodeType $nodeType = null, $identifier = null): NodeInterface
+    public function createNode($name, ?NodeType $nodeType = null, $identifier = null): NodeInterface
     {
         $this->emitBeforeNodeCreate($this, $name, $nodeType, $identifier);
         $newNode = $this->createSingleNode($name, $nodeType, $identifier);
@@ -1182,7 +1182,7 @@ class Node implements NodeInterface, CacheAwareInterface, TraversableNodeInterfa
      * @throws NodeExistsException
      * @throws NodeTypeNotFoundException
      */
-    public function createSingleNode($name, NodeType $nodeType = null, $identifier = null): NodeInterface
+    public function createSingleNode($name, ?NodeType $nodeType = null, $identifier = null): NodeInterface
     {
         if ($nodeType !== null && !$this->willChildNodeBeAutoCreated($name) && !$this->isNodeTypeAllowedAsChildNode($nodeType)) {
             throw new NodeConstraintException('Cannot create new node "' . $name . '" of Type "' . $nodeType->getName() . '" in ' . $this->__toString(), 1400782413);
@@ -1416,7 +1416,7 @@ class Node implements NodeInterface, CacheAwareInterface, TraversableNodeInterfa
      * @throws NodeTypeNotFoundException
      * @throws NodeException
      */
-    public function setHiddenBeforeDateTime(\DateTimeInterface $dateTime = null): void
+    public function setHiddenBeforeDateTime(?\DateTimeInterface $dateTime = null): void
     {
         if ($this->getHiddenBeforeDateTime() instanceof \DateTime && $dateTime instanceof \DateTime && $this->getHiddenBeforeDateTime()->format(\DateTime::W3C) === $dateTime->format(\DateTime::W3C)) {
             return;
@@ -1447,7 +1447,7 @@ class Node implements NodeInterface, CacheAwareInterface, TraversableNodeInterfa
      * @throws NodeTypeNotFoundException
      * @throws NodeException
      */
-    public function setHiddenAfterDateTime(\DateTimeInterface $dateTime = null): void
+    public function setHiddenAfterDateTime(?\DateTimeInterface $dateTime = null): void
     {
         if ($this->getHiddenAfterDateTime() instanceof \DateTimeInterface && $dateTime instanceof \DateTimeInterface && $this->getHiddenAfterDateTime()->format(\DateTime::W3C) === $dateTime->format(\DateTime::W3C)) {
             return;
@@ -1976,7 +1976,7 @@ class Node implements NodeInterface, CacheAwareInterface, TraversableNodeInterfa
      * @param boolean $status
      * @return void
      */
-    public function setNodeDataIsMatchingContext(bool $status = null): void
+    public function setNodeDataIsMatchingContext(?bool $status = null): void
     {
         $this->nodeDataIsMatchingContext = $status;
     }
@@ -2078,7 +2078,7 @@ class Node implements NodeInterface, CacheAwareInterface, TraversableNodeInterfa
      * @return TraversableNodes
      * @api
      */
-    public function findChildNodes(NodeTypeConstraints $nodeTypeConstraints = null, int $limit = null, int $offset = null): TraversableNodes
+    public function findChildNodes(?NodeTypeConstraints $nodeTypeConstraints = null, ?int $limit = null, ?int $offset = null): TraversableNodes
     {
         /** @noinspection PhpDeprecationInspection */
         $filter = $nodeTypeConstraints !== null ? $nodeTypeConstraints->asLegacyNodeTypeFilterString() : null;
@@ -2092,7 +2092,7 @@ class Node implements NodeInterface, CacheAwareInterface, TraversableNodeInterfa
      * @param NodeTypeConstraints|null $nodeTypeConstraints
      * @return int
      */
-    public function countChildNodes(NodeTypeConstraints $nodeTypeConstraints = null): int
+    public function countChildNodes(?NodeTypeConstraints $nodeTypeConstraints = null): int
     {
         return count($this->findChildNodes($nodeTypeConstraints));
     }
